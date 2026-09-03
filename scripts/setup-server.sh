@@ -20,7 +20,7 @@ log() { printf '\n\033[1;36m==> %s\033[0m\n' "$1"; }
 log "Paketlar o'rnatilmoqda"
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -qq
-apt-get install -y -qq nginx git certbot python3-certbot-nginx ufw
+apt-get install -y -qq nginx git certbot python3-certbot-nginx ufw dnsutils curl
 
 log "Repo klon qilinmoqda -> $ROOT"
 if [[ -d "$ROOT/.git" ]]; then

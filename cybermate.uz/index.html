@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CyberMate.uz — Korporativ Kiberxavfsizlik va SOC Himoya Qalqoni</title>
+  <meta name="description" content="CyberMate.uz — veb-saytlar, serverlar va korporativ tarmoqlarni xakerlik hujumlari, DDoS va ma'lumotlar sizib chiqishidan 24/7 himoya qiluvchi kiber-ekotizim." />
+  <meta name="theme-color" content="#050811" />
+  <link rel="canonical" href="https://cybermate.uz/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://cybermate.uz/#org",
+        "name": "CyberMate Uzbekistan",
+        "url": "https://cybermate.uz/",
+        "telephone": "+998944057070",
+        "founder": {
+          "@type": "Person",
+          "name": "Orzimurod"
+        },
+        "description": "Next-Gen Cybersecurity and SOC Monitoring."
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <!-- Domen va Aloqa Maxsus Banneri -->
+  <div class="owner-banner">
+    <div class="wrap owner-banner__inner">
+      <span class="owner-banner__tag">🛡️ RASMIY KIBER-MAQOM</span>
+      <p class="owner-banner__text">
+        Ushbu xavfsizlik domeni yangi egasiga tegishli. Barcha takliflar va kiber-audit uchun: 
+        <strong>Orzimurod</strong> (<a href="tel:+998944057070">+998 94 405 70 70</a> / <a href="https://t.me/dream_0044" target="_blank">Telegram</a>)
+      </p>
+    </div>
+  </div>
+
+  <header class="nav" id="nav">
+    <div class="wrap nav__inner">
+      <a class="brand" href="#hero">
+        <div class="brand__icon">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path d="M16 3L5 7V15C5 22 10 27.5 16 29C22 27.5 27 22 27 15V7L16 3Z" stroke="#00F59B" stroke-width="2" stroke-linejoin="round"/>
+            <circle cx="16" cy="15" r="4" fill="#00F59B"/>
+          </svg>
+        </div>
+        <span class="brand__text">CYBER<strong class="text-green">MATE</strong><span class="brand__dot">.UZ</span></span>
+      </a>
+
+      <nav class="nav__links" id="nav-menu">
+        <a href="#skaner">Zaiflik Skaneri</a>
+        <a href="#xizmatlar">Xizmatlar</a>
+        <a href="#radar">Kiber Radar</a>
+        <a href="#aloqa" class="btn btn--green">PenTestga buyurtma</a>
+      </nav>
+
+      <button class="nav__toggle" id="nav-toggle" aria-label="Menyu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO SECTION -->
+    <section class="hero" id="hero">
+      <canvas class="hero__canvas" id="matrix-canvas"></canvas>
+      <div class="hero__glow"></div>
+
+      <div class="wrap hero__grid">
+        <div class="hero__copy">
+          <div class="badge">
+            <span class="dot"></span> NEXT-GEN ZERO-TRUST DEFENSE 2026
+          </div>
+          <h1>
+            Kiber-tahdidlarga qarshi <br/>
+            <span class="green-gradient">eng ishonchli qalqon.</span>
+          </h1>
+          <p class="lead">
+            CyberMate.uz — korxona, bank va IT tizimlarining xavfsizlik bo'shliqlarini (PenTest) aniqlaydi,
+            DDoS hujumlarni qaytaradi va 24/7 SOC monitoringini ta'minlaydi.
+          </p>
+          <div class="hero__actions">
+            <a href="#skaner" class="btn btn--green">🛡️ Tizimni skanerlash</a>
+            <a href="tel:+998944057070" class="btn btn--glass">📞 +998 94 405 70 70</a>
+          </div>
+
+          <div class="hero__stats">
+            <div class="stat-box">
+              <span class="s-val">0-Day</span>
+              <span class="s-lbl">Zaifliklarni tezkor aniqlash</span>
+            </div>
+            <div class="stat-box">
+              <span class="s-val">99.99%</span>
+              <span class="s-lbl">DDoS filtrlash samaradorligi</span>
+            </div>
+            <div class="stat-box">
+              <span class="s-val">&lt; 60s</span>
+              <span class="s-lbl">Insidentga javob vaqti</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3D / Live Threat Radar Visualizer -->
+        <div class="hero__visual">
+          <div class="radar-card" id="radar">
+            <div class="radar-head">
+              <div class="radar-status">
+                <span class="radar-pulse"></span>
+                <strong>LIVE SOC RADAR</strong>
+              </div>
+              <span class="r-geo">REGION: UZ-CENTRAL</span>
+            </div>
+            <div class="radar-scope">
+              <div class="sweep"></div>
+              <div class="target t1"></div>
+              <div class="target t2"></div>
+              <div class="target t3"></div>
+            </div>
+            <div class="radar-stats">
+              <div class="r-metric"><span>Hujumlar qaytarildi:</span> <strong>14,820</strong></div>
+              <div class="r-metric"><span>WAF Holati:</span> <strong class="text-green">BLOCKED</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ZAIFLIK SKANERI DEMO -->
+    <section class="section" id="skaner">
+      <div class="wrap">
+        <div class="scan-box">
+          <div class="section-head">
+            <p class="eyebrow">Onlayn Tekshiruv</p>
+            <h2>Sayt va serveringizning dastlabki kiber-holati</h2>
+            <p>Domen yoki IP manzilini kiriting va xavfsizlik sertifikati hamda ochiq portlarni tekshiring.</p>
+          </div>
+
+          <div class="scan-form">
+            <div class="input-wrap">
+              <span class="input-prefix">https://</span>
+              <input type="text" id="target-domain" placeholder="kompaniyangiz.uz" class="scan-input" />
+              <button type="button" id="start-scan-btn" class="btn btn--green">Skanerlash</button>
+            </div>
+            <div class="scan-console" id="scan-console">
+              <p class="console-line text-muted">[SYSTEM] CyberMate Security Scanner v3.1 ga xush kelibsiz. Domen kiriting...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- XIZMATLAR -->
+    <section class="section section--alt" id="xizmatlar">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">To'liq Qamrovli Xavfsizlik</p>
+          <h2>Bizning Himoya Modullarimiz</h2>
+        </div>
+
+        <div class="grid grid--3">
+          <div class="card">
+            <div class="card-icon">🎯</div>
+            <h3>Penetration Testing (PenTest)</h3>
+            <p>Tizimingizni xakerlar nigohi bilan sinab, zaif nuqtalarni haqiqiy hujum sodir bo'lishidan oldin topamiz.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">⚡</div>
+            <h3>DDoS & WAF Himoyasi</h3>
+            <p>Trafikni tahlil qilib, soxta botlarni real foydalanuvchilarga xalaqit bermasdan bir zumda filtrlaymiz.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🔐</div>
+            <h3>Kiber-Gigiyena va Xodimlar Treningi</h3>
+            <p>Fishing (soxta xatlar) orqali xodimlar xatoga yo'l qo'ymasligi uchun maxsus amaliy testlar o'tkazamiz.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ALOQA VA BOSHQARUV -->
+    <section class="section" id="aloqa">
+      <div class="wrap wrap--narrow">
+        <div class="contact-card">
+          <div class="badge">Boshqaruv & Aloqa</div>
+          <h2>Kiberxavfsizlik Auditi va Hamkorlik</h2>
+          <p>
+            CyberMate.uz domeni va boshqaruvi yangi egasiga tegishli. Barcha kiber-auditlar, takliflar va maslahatlar uchun:
+          </p>
+
+          <div class="owner-badge">
+            <div class="avatar-box">OR</div>
+            <div>
+              <h3>Orzimurod</h3>
+              <p>Domen Egasi & Xavfsizlik Arxitektori</p>
+            </div>
+          </div>
+
+          <div class="contact-grid">
+            <a href="tel:+998944057070" class="c-btn">
+              <span>📞</span>
+              <div>
+                <small>Telefon:</small>
+                <strong>+998 94 405 70 70</strong>
+              </div>
+            </a>
+            <a href="https://t.me/dream_0044" target="_blank" class="c-btn">
+              <span>💬</span>
+              <div>
+                <small>Telegram:</small>
+                <strong>@dream_0044</strong>
+              </div>
+            </a>
+          </div>
+
+          <form class="lead-form" id="cyber-form">
+            <div class="form-row">
+              <input type="text" placeholder="Ismingiz va Kompaniya" required class="f-input" id="cName" />
+              <input type="tel" placeholder="Telefon raqamingiz" required class="f-input" id="cPhone" />
+            </div>
+            <textarea placeholder="Tizimingiz haqida (Masalan: veb-sayt, mobil ilova yoki server himoyasi kerak...)" rows="3" class="f-input" id="cMsg"></textarea>
+            <button type="submit" class="btn btn--green btn--block">PenTest & Audit buyurtma qilish</button>
+            <div id="cStatus" class="form-status"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>© 2026 CyberMate.uz — Barcha huquqlar himoyalangan. Boshqaruvchi: Orzimurod (+998 94 405 70 70)</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

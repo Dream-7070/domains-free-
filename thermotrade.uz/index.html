@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ThermoTrade — Zamonaviy Isitish, Sovitish va Termal Muhandislik Tizimlari</title>
+  <meta name="description" content="ThermoTrade — sanoat va xonadonlar uchun energiya tejamkor isitish, ventilyatsiya, chiller va iqlim boshqaruvi tizimlari integratori." />
+  <meta name="theme-color" content="#0C0F17" />
+  <link rel="canonical" href="https://thermotrade.uz/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://thermotrade.uz/#org",
+        "name": "ThermoTrade Uzbekistan",
+        "url": "https://thermotrade.uz/",
+        "telephone": "+998944057070",
+        "founder": {
+          "@type": "Person",
+          "name": "Orzimurod"
+        },
+        "description": "Sanoat va xususiy obyektlar uchun zamonaviy iqlim, isitish va sovitish tizimlari."
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <!-- Domen va Aloqa Maxsus Banneri -->
+  <div class="owner-banner">
+    <div class="wrap owner-banner__inner">
+      <span class="owner-banner__tag">📌 RASMIY MA'LUMOT</span>
+      <p class="owner-banner__text">
+        Domen yangi egasi tomonidan xarid qilingan. Aloqa va takliflar uchun: 
+        <strong>Orzimurod</strong> (<a href="tel:+998944057070">+998 94 405 70 70</a> / <a href="https://t.me/dream_0044" target="_blank">Telegram</a>)
+      </p>
+    </div>
+  </div>
+
+  <header class="nav" id="nav">
+    <div class="wrap nav__inner">
+      <a class="brand" href="#hero">
+        <div class="brand__icon">
+          <svg viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="14" stroke="url(#heatGrad)" stroke-width="2.5"/>
+            <path d="M12 20C12 16 20 16 20 12" stroke="#FF5722" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 22C16 19 16 13 16 10" stroke="#00E5FF" stroke-width="2" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="heatGrad" x1="0" y1="0" x2="32" y2="32">
+                <stop offset="0%" stop-color="#FF5722"/>
+                <stop offset="100%" stop-color="#00E5FF"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="brand__text">THERMO<strong>TRADE</strong><span class="brand__dot">.uz</span></span>
+      </a>
+
+      <nav class="nav__links" id="nav-menu">
+        <a href="#tizimlar">Tizimlar</a>
+        <a href="#kalkulyator">Energiya Kalkulyatori</a>
+        <a href="#afzalliklar">Afzalliklar</a>
+        <a href="#namunalar">Obyektlar</a>
+        <a href="#aloqa" class="btn btn--primary">Loyiha hisoblash</a>
+      </nav>
+
+      <button class="nav__toggle" id="nav-toggle" aria-label="Menyu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO SECTION -->
+    <section class="hero" id="hero">
+      <canvas class="hero__canvas" id="thermo-canvas"></canvas>
+      <div class="hero__ambient"></div>
+
+      <div class="wrap hero__grid">
+        <div class="hero__copy">
+          <div class="badge">
+            <span class="dot"></span> 2026 Iqlim & Termal Texnologiyalari
+          </div>
+          <h1>
+            Ideal harorat — <br/>
+            <span class="heat-text">aqlli energiya</span> va yuqori samaradorlik.
+          </h1>
+          <p class="lead">
+            Sanoat korxonalari, savdo markazlari, issiqxonalar va zamonaviy xonadonlar uchun
+            avtomatlashtirilgan isitish (HVAC), sovitish va ventilyatsiya yechimlari.
+          </p>
+          <div class="hero__actions">
+            <a href="#kalkulyator" class="btn btn--primary">⚡ Tejamkorlikni hisoblash</a>
+            <a href="tel:+998944057070" class="btn btn--secondary">📞 +998 94 405 70 70</a>
+          </div>
+
+          <div class="hero__stats">
+            <div class="stat-item">
+              <span class="stat-num">-40% gacha</span>
+              <span class="stat-lbl">Gaz va elektr tejamkorligi</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">A+++</span>
+              <span class="stat-lbl">Energo-samaradorlik klassi</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">24/7</span>
+              <span class="stat-lbl">Avtomatik telemetriya nazorati</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3D / Interactive Thermal Flow Card -->
+        <div class="hero__visual">
+          <div class="thermal-card">
+            <div class="thermal-card__header">
+              <span class="thermal-mode active" id="mode-heat">🔥 Isitish Oqimi</span>
+              <span class="thermal-mode" id="mode-cool">❄️ Sovitish Oqimi</span>
+            </div>
+            <div class="thermal-card__body">
+              <div class="gauge-box">
+                <svg viewBox="0 0 200 120" class="gauge-svg">
+                  <path d="M20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#222A38" stroke-width="14" stroke-linecap="round"/>
+                  <path id="gauge-bar" d="M20 100 A 80 80 0 0 1 140 35" fill="none" stroke="url(#gaugeGrad)" stroke-width="14" stroke-linecap="round"/>
+                  <defs>
+                    <linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stop-color="#00E5FF"/>
+                      <stop offset="50%" stop-color="#FFD600"/>
+                      <stop offset="100%" stop-color="#FF3D00"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div class="gauge-val" id="gauge-temp">+22.5°C</div>
+                <span class="gauge-sub">Optimal Termal Balans</span>
+              </div>
+              <div class="thermal-metrics">
+                <div class="metric"><span>COP / EER:</span> <strong>4.82</strong></div>
+                <div class="metric"><span>Inverter bosimi:</span> <strong>2.4 bar</strong></div>
+                <div class="metric"><span>Havo almashinuvi:</span> <strong>98.5%</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIZIMLAR KATALOGI -->
+    <section class="section" id="tizimlar">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Asosiy Yo'nalishlar</p>
+          <h2>To'liq sikldagi termal muhandislik</h2>
+          <p class="section-desc">Loyihalashdan tortib, uskunalar yetkazish, o'rnatish va avtomatlashtirishgacha.</p>
+        </div>
+
+        <div class="grid grid--3">
+          <div class="feature-card">
+            <div class="feature-icon heat-icon">🔥</div>
+            <h3>Sanoat Qozonxonalari va Isitish</h3>
+            <p>Gaz, elektr va bioto'qima qozonlari. Kam xarajat bilan maksimal issiqlik unumdorligi beruvchi tizimlar.</p>
+            <ul class="feature-list">
+              <li>Kondensatsion yuqori tejamkor qozonlar</li>
+              <li>Avtomatlashtirilgan nasos guruhlari</li>
+              <li>Issiqlik almashtirgichlar (Alfa Laval tipi)</li>
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon cool-icon">❄️</div>
+            <h3>VRF va Chiller-Fankoyl Sovitish</h3>
+            <p>Katta binolar, mehmonxona va ishlab chiqarish sexlari uchun markazlashgan ko'p zonali iqlim nazorati.</p>
+            <ul class="feature-list">
+              <li>Inverterli kompressor texnologiyasi</li>
+              <li>Har bir xonani mustaqil boshqarish</li>
+              <li>Shovqinsiz aerodinamik fankoyllar</li>
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon eco-icon">🌱</div>
+            <h3>Rekuperatsiyali Shamollatish</h3>
+            <p>Toza havoni kiritishda ichkaridagi issiqlik/sovuqlik energiyasini 85% gacha saqlab qoluvchi tizimlar.</p>
+            <ul class="feature-list">
+              <li>HEPA va antibakterial filtrlar</li>
+              <li>Namlik va CO2 balansi nazorati</li>
+              <li>Smart IoT mobil boshqaruv</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERAKTIV ENERGIYA TEJAMKORLIK KALKULYATORI -->
+    <section class="section section--alt" id="kalkulyator">
+      <div class="wrap">
+        <div class="calc-box">
+          <div class="calc-head">
+            <span class="badge">Kalkulyator</span>
+            <h2>Obyektingiz uchun energiya tejash hisobi</h2>
+            <p>Maydon va mavjud tizim turini tanlang, yillik tejaladigan mablag'ni ko'ring.</p>
+          </div>
+
+          <div class="calc-body">
+            <div class="calc-inputs">
+              <div class="form-group">
+                <label>Obyekt maydoni: <strong id="area-val">350 m²</strong></label>
+                <input type="range" id="area-range" min="50" max="5000" step="50" value="350" class="range-slider" />
+              </div>
+
+              <div class="form-group">
+                <label>Obyekt turi:</label>
+                <div class="toggle-group" id="obj-type">
+                  <button type="button" class="btn-toggle active" data-type="commercial">Tijorat / Ofis</button>
+                  <button type="button" class="btn-toggle" data-type="industry">Ishlab chiqarish</button>
+                  <button type="button" class="btn-toggle" data-type="house">Xususiy Villa</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Mavjud isitish usuli:</label>
+                <select id="current-tech" class="form-select">
+                  <option value="old_gas">Eski gaz qozoni (samaradorlik past)</option>
+                  <option value="electric">Oddiy elektr tenlari</option>
+                  <option value="none">Yangi qurilayotgan bino</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="calc-results">
+              <div class="res-card">
+                <span class="res-title">Tavsiya etiladigan quvvat:</span>
+                <div class="res-val" id="res-power">42 kVt</div>
+                <span class="res-note">Isitish + Sovitish balansi</span>
+              </div>
+              <div class="res-card res-card--highlight">
+                <span class="res-title">Yillik tejaladigan mablag':</span>
+                <div class="res-val" id="res-saving">~24,500,000 so'm</div>
+                <span class="res-note">Zamonaviy inverter & rekuperatsiya hisobiga</span>
+              </div>
+              <a href="#aloqa" class="btn btn--primary btn--block">Loyiha smetasini buyurtma qilish</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ALOQA VA BUYURTMA -->
+    <section class="section" id="aloqa">
+      <div class="wrap wrap--narrow">
+        <div class="contact-card">
+          <div class="contact-card__info">
+            <div class="badge">Aloqa & Boshqaruv</div>
+            <h2>Loyiha va hamkorlik uchun bog'laning</h2>
+            <p>
+              Ushbu platforma va domen yangi egasiga tegishli. Barcha takliflar, loyihalar va
+              hamkorlik masalalari bo'yicha to'g'ridan-to'g'ri bog'lanishingiz mumkin.
+            </p>
+            <div class="contact-person">
+              <div class="person-avatar">OR</div>
+              <div>
+                <strong>Orzimurod</strong>
+                <span>Domen va Loyiha egasi</span>
+              </div>
+            </div>
+            <div class="direct-links">
+              <a href="tel:+998944057070" class="direct-item">
+                <span class="d-icon">📞</span>
+                <div>
+                  <small>Telefon:</small>
+                  <strong>+998 94 405 70 70</strong>
+                </div>
+              </a>
+              <a href="https://t.me/dream_0044" target="_blank" class="direct-item">
+                <span class="d-icon">✈️</span>
+                <div>
+                  <small>Telegram:</small>
+                  <strong>@dream_0044</strong>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <form class="lead-form" id="thermo-form">
+            <h3>Tezkor so'rov qoldirish</h3>
+            <div class="form-group">
+              <label for="tName">Ismingiz *</label>
+              <input type="text" id="tName" required placeholder="Ali Valiyev" class="form-input" />
+            </div>
+            <div class="form-group">
+              <label for="tPhone">Telefon raqamingiz *</label>
+              <input type="tel" id="tPhone" required placeholder="+998 90 123 45 67" class="form-input" />
+            </div>
+            <div class="form-group">
+              <label for="tMsg">Obyekt haqida qisqacha</label>
+              <textarea id="tMsg" rows="3" placeholder="Maydoni, qanday tizim kerak..." class="form-input"></textarea>
+            </div>
+            <button type="submit" class="btn btn--primary btn--block">Yuborish</button>
+            <div class="form-status" id="form-status"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <p>© 2026 ThermoTrade.uz — Barcha huquqlar himoyalangan. Rasmiy boshqaruvchi: Orzimurod (+998 94 405 70 70)</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

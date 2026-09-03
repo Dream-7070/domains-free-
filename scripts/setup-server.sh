@@ -84,6 +84,11 @@ EOF
 ln -sfn /etc/nginx/sites-available/000-catchall /etc/nginx/sites-enabled/000-catchall
 rm -f /etc/nginx/sites-enabled/default
 
+# Domen nomlari standart 32-baytlik xesh chelagiga sig'maydi
+cat > /etc/nginx/conf.d/00-tuning.conf <<'EOF'
+server_names_hash_bucket_size 64;
+EOF
+
 log "Konfiguratsiya tekshirilmoqda"
 nginx -t
 

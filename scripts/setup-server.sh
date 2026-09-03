@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Beshta static landing page'ni MAVJUD Apache serveriga qo'shadi.
-# Ubuntu/Debian + Apache 2.4.
+# Beshta static landing page uchun toza serverni sozlaydi.
+# Ubuntu 24.04 LTS. root bilan ishga tushiriladi.
 #
-#   sudo bash setup-server.sh
+#   curl -fsSL <raw-url> | sudo bash
 #
-# Skript idempotent. Mavjud saytlarga (default vhost) TEGMAYDI.
+# Skript idempotent: qayta-qayta ishga tushirsa bo'ladi.
 
 set -euo pipefail
 
@@ -13,24 +13,12 @@ ROOT="/var/www/domains"
 DOMAINS=(aifabric.uz alphior.uz cybermate.uz protsess.uz thermotrade.uz)
 
 log() { printf '\n\033[1;36m==> %s\033[0m\n' "$1"; }
-
 [[ $EUID -eq 0 ]] || { echo "root kerak: sudo bash $0"; exit 1; }
-command -v apache2 >/dev/null || { echo "Apache topilmadi. Bu skript mavjud Apache uchun."; exit 1; }
 
-log "Apache konfiguratsiyasi zaxiraga olinmoqda"
-BK="/root/apache-backup-$(date +%Y%m%d-%H%M%S).tar.gz"
-tar czf "$BK" /etc/apache2 2>/dev/null || true
-echo "  Zaxira: $BK"
-echo "  Hozirgi holat (o'zgarishdan oldin):"
-apache2ctl -S 2>&1 | sed 's/^/    /' | head -20
-
-log "Kerakli paketlar"
+log "Paketlar o'rnatilmoqda"
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -qq
-apt-get install -y -qq git dnsutils curl certbot python3-certbot-apache
-
-log "Apache modullari"
-a2enmod headers expires deflate >/dev/null
+apt-get install -y -qq nginx git certbot python3-certbot-nginx ufw dnsutils curl
 
 log "Repo klon qilinmoqda -> $ROOT"
 if [[ -d "$ROOT/.git" ]]; then
@@ -46,73 +34,83 @@ find "$ROOT" -type f -exec chmod 644 {} +
 log "Virtual hostlar yaratilmoqda"
 for d in "${DOMAINS[@]}"; do
   [[ -f "$ROOT/$d/index.html" ]] || { echo "  ! $ROOT/$d/index.html yo'q, o'tkazib yuborildi"; continue; }
-  cat > "/etc/apache2/sites-available/$d.conf" <<EOF
-<VirtualHost *:80>
-    ServerName $d
-    ServerAlias www.$d
-    DocumentRoot $ROOT/$d
+  cat > "/etc/nginx/sites-available/$d" <<EOF
+server {
+    listen 80;
+    listen [::]:80;
+    server_name $d www.$d;
 
-    <Directory $ROOT/$d>
-        Options -Indexes +FollowSymLinks
-        AllowOverride None
-        Require all granted
-    </Directory>
+    root $ROOT/$d;
+    index index.html;
 
-    <IfModule mod_expires.c>
-        ExpiresActive On
-        ExpiresByType text/css "access plus 30 days"
-        ExpiresByType application/javascript "access plus 30 days"
-        ExpiresByType image/png "access plus 30 days"
-        ExpiresByType image/jpeg "access plus 30 days"
-        ExpiresByType image/svg+xml "access plus 30 days"
-        ExpiresByType image/webp "access plus 30 days"
-        ExpiresByType font/woff2 "access plus 30 days"
-    </IfModule>
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
 
-    <IfModule mod_deflate.c>
-        AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
-    </IfModule>
+    location ~* \.(css|js|jpg|jpeg|png|gif|ico|svg|webp|woff|woff2|ttf)\$ {
+        expires 30d;
+        add_header Cache-Control "public";
+        access_log off;
+    }
 
-    <IfModule mod_headers.c>
-        Header always set X-Content-Type-Options "nosniff"
-        Header always set X-Frame-Options "SAMEORIGIN"
-        Header always set Referrer-Policy "strict-origin-when-cross-origin"
-    </IfModule>
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_types text/plain text/css application/javascript application/json image/svg+xml;
 
-    ErrorLog \${APACHE_LOG_DIR}/$d-error.log
-    CustomLog \${APACHE_LOG_DIR}/$d-access.log combined
-</VirtualHost>
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+
+    location ~ /\.(?!well-known) { deny all; }
+
+    access_log /var/log/nginx/$d-access.log;
+    error_log  /var/log/nginx/$d-error.log;
+}
 EOF
-  a2ensite "$d.conf" >/dev/null
+  ln -sfn "/etc/nginx/sites-available/$d" "/etc/nginx/sites-enabled/$d"
   echo "  + $d"
 done
 
+# Noma'lum domen yoki IP orqali kelgan so'rovlarni to'sadigan default
+cat > /etc/nginx/sites-available/000-catchall <<'EOF'
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    return 444;
+}
+EOF
+ln -sfn /etc/nginx/sites-available/000-catchall /etc/nginx/sites-enabled/000-catchall
+rm -f /etc/nginx/sites-enabled/default
+
 log "Konfiguratsiya tekshirilmoqda"
-apache2ctl configtest
+nginx -t
 
-log "Apache qayta yuklanmoqda (reload — uzilishsiz)"
-systemctl reload apache2
+log "Nginx ishga tushirilmoqda"
+systemctl enable --now nginx
+systemctl reload nginx
 
-log "Natija"
-apache2ctl -S 2>&1 | sed 's/^/  /' | head -25
+log "Firewall"
+ufw allow OpenSSH >/dev/null
+ufw allow 'Nginx Full' >/dev/null
+ufw --force enable >/dev/null
+ufw status | sed 's/^/  /' | head -12
 
-echo
+log "Lokal tekshiruv"
 for d in "${DOMAINS[@]}"; do
   code=$(curl -s -o /dev/null -w '%{http_code}' -H "Host: $d" http://127.0.0.1/ || echo "---")
   echo "  $d -> HTTP $code"
 done
 
+MYIP=$(curl -s https://api.ipify.org || echo "?")
 cat <<EOF
 
 TAYYOR — saytlar HTTP orqali ishlayapti.
-Mavjud "EVE" ilovasi default vhost sifatida joyida qoldi.
+Serverning tashqi IP manzili: $MYIP
 
-Keyingi qadam (DNS allaqachon tayyor):
-
-    sudo bash $ROOT/scripts/setup-ssl.sh
-
-Biror narsa noto'g'ri ketsa, Apache konfiguratsiyasini qaytarish:
-
-    tar xzf $BK -C / && systemctl reload apache2
+Keyingi qadamlar:
+  1) DNS: har bir domenning @ va www A yozuvini $MYIP ga o'zgartiring
+  2) Tarqalgach:  sudo bash $ROOT/scripts/setup-ssl.sh
 
 EOF

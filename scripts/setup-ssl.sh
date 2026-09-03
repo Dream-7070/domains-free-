@@ -29,7 +29,7 @@ for d in "${ok[@]}"; do
   else
     echo "  (www.$d yo'naltirilmagan — qo'shilmadi)"
   fi
-  certbot --apache "${args[@]}" \
+  certbot --nginx "${args[@]}" \
     --non-interactive --agree-tos -m "$EMAIL" \
     --redirect --keep-until-expiring
 done

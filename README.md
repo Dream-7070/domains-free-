@@ -31,10 +31,8 @@ cd aifabric.uz && python -m http.server 8000
 
 ## Deploy
 
-Server: mavjud **Apache 2.4**, har bir domen uchun alohida virtual host,
-DocumentRoot sifatida shu repodagi domen papkasi. SSL — Let's Encrypt.
-
-Serverda avvaldan boshqa ilova ishlaydi (default vhost) — unga tegilmaydi.
+Server: **Nginx** (Ubuntu 24.04), har bir domen uchun alohida virtual host,
+root sifatida shu repodagi domen papkasi. SSL — Let's Encrypt.
 
 Yangilash:
 

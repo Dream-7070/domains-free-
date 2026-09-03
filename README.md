@@ -31,8 +31,10 @@ cd aifabric.uz && python -m http.server 8000
 
 ## Deploy
 
-Server: Nginx, har bir domen uchun alohida virtual host, root sifatida
-shu repodagi domen papkasi ishlatiladi. SSL — Let's Encrypt.
+Server: mavjud **Apache 2.4**, har bir domen uchun alohida virtual host,
+DocumentRoot sifatida shu repodagi domen papkasi. SSL — Let's Encrypt.
+
+Serverda avvaldan boshqa ilova ishlaydi (default vhost) — unga tegilmaydi.
 
 Yangilash:
 
@@ -41,3 +43,5 @@ cd /var/www/domains && git pull
 ```
 
 Build yo'q, restart yo'q — o'zgargan fayllar joyiga tushadi.
+
+Skriptlar: `scripts/setup-server.sh`, `scripts/setup-ssl.sh`, `scripts/update.sh`

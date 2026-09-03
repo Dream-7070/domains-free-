@@ -7,5 +7,4 @@ git -C "$ROOT" pull --ff-only
 chown -R root:www-data "$ROOT"
 find "$ROOT" -type d -exec chmod 755 {} +
 find "$ROOT" -type f -exec chmod 644 {} +
-nginx -t && systemctl reload nginx
 echo "Yangilandi: $(git -C "$ROOT" log -1 --format='%h %s')"
